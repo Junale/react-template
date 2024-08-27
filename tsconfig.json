@@ -1,12 +1,12 @@
 {
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [ { "path": "./tsconfig.node.json" } ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [ "./src/*" ]
     },
     "target": "ES5", // Ensure compatibility with older browsers
-    "lib": ["DOM", "ES2015"], // Include ES2015 for Promise definitions
+    "lib": [ "DOM", "ES2015" ], // Include ES2015 for Promise definitions
     "module": "ESNext", // Support dynamic imports
     "moduleResolution": "node",
     "strict": true,
@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": [ "src" ]
 }

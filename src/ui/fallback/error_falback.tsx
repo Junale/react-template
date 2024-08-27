@@ -5,7 +5,10 @@ type ErrorFallbackProps = {
 	resetErrorBoundary?: () => void;
 };
 
-const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => (
+const ErrorFallback = ({
+	error,
+	resetErrorBoundary,
+}: ErrorFallbackProps): JSX.Element => (
 	<div className="flex size-full justify-center items-center">
 		<ErrorWidget error={error} onClose={resetErrorBoundary} />
 	</div>

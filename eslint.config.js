@@ -1,57 +1,33 @@
-import js from '@eslint/js';
-import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier';
-import importPlugin from 'eslint-plugin-import';
 
-export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'build'] },
+export default [
   {
-    parser: tsParser,
-    extends: [
-      js.configs.recommended,
-      'plugin:@typescript-eslint/recommended',
-      'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      'plugin:react/recommended',
-      'plugin:react-hooks/recommended',
-      'plugin:jsx-a11y/recommended',
-      'plugin:prettier/recommended',
-      'plugin:import/errors',
-      'plugin:import/warnings',
-      'plugin:import/typescript',
-    ],
-
-    parserOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      ecmaFeatures: {
-        jsx: true,
-      },
-      project: './tsconfig.json',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
-        typescript: {}, // This loads <rootdir>/tsconfig.json to ESLint
-      },
-      alias: {
-        map: [['@', './src']],
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    ignores: ['dist', 'node_modules', 'build'],
+  },
+  {
+    files: ['./**/*.ts', './**/*.tsx', './**/*.js', './**/*.jsx'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+        project: './tsconfig.json',
       },
     },
     plugins: {
       '@typescript-eslint': tseslint,
+      react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'jsx-a11y': jsxA11y,
-      'prettier': prettier,
-      'import': importPlugin,
+      prettier,
     },
     rules: {
       // TypeScript Rules
@@ -61,7 +37,7 @@ export default tseslint.config(
       '@typescript-eslint/no-inferrable-types': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-empty-function': ['warn', { allow: ['arrowFunctions'] }],
-      '@typescript-eslint/consistent-type-definitions': ['warn', 'interface'], // Prefer interface over type
+      '@typescript-eslint/consistent-type-definitions': ['warn', 'type'], // Prefer interface over type
       '@typescript-eslint/prefer-optional-chain': 'warn',
       '@typescript-eslint/explicit-module-boundary-types': 'off', // Can be annoying, usually better off
 
@@ -85,40 +61,17 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
 
-      // Accessibility (jsx-a11y) Rules
-      'jsx-a11y/anchor-is-valid': ['warn', { aspects: ['noHref', 'invalidHref', 'preferButton'] }],
-      'jsx-a11y/alt-text': 'warn', // Ensure alt text is provided on images
-      'jsx-a11y/no-autofocus': 'warn', // Avoid autoFocus attribute
-      'jsx-a11y/label-has-associated-control': ['warn', { assert: 'either' }],
-      'jsx-a11y/interactive-supports-focus': 'warn', // Ensure interactive elements are focusable
-      'jsx-a11y/no-static-element-interactions': 'warn', // Avoid static elements used as interactive
-      'jsx-a11y/click-events-have-key-events': 'warn', // Ensure click events are paired with key events
-
-      // Import Rules
-      'import/order': [
-        'warn',
-        {
-          groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
-      'import/no-unresolved': 'error', // Ensure imports are resolved
-      'import/no-duplicates': 'warn', // Disallow duplicate imports
-      'import/newline-after-import': 'warn', // Require a newline after import statements
-      'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.spec.ts', '**/setupTests.ts'] }],
-
       // Prettier Integration
       'prettier/prettier': [
         'warn',
         {
-          singleQuote: true,
+          singleQuote: false, // Use double quotes
           trailingComma: 'all',
           bracketSpacing: true,
           jsxBracketSameLine: false,
           printWidth: 80,
-          tabWidth: 2,
-          useTabs: false,
+          tabWidth: 4,
+          useTabs: true,
           semi: true,
           endOfLine: 'auto',
         },
@@ -140,11 +93,19 @@ export default tseslint.config(
       'comma-dangle': ['warn', 'always-multiline'], // Require trailing commas in multiline objects, arrays, etc.
       'object-shorthand': ['warn', 'always'], // Enforce using object shorthand
       'no-duplicate-imports': 'warn', // Disallow duplicate imports
+
+      // Enforce semicolons and double quotes
+      'semi': ['error', 'always'],
+      'quotes': ['error', 'double'],
     },
-    env: {
-      browser: true,
-      es6: true,
-      node: true,
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+      },
     },
   },
-);
+];
