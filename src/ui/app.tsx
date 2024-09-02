@@ -4,10 +4,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./fallback/error_falback";
 import LoadingFallback from "./fallback/loading_fallback";
 
-
-
-export const App = () => (
-	<ErrorBoundary FallbackComponent={ErrorFallback}  >
+export const App = (): JSX.Element => (
+	<ErrorBoundary FallbackComponent={ErrorFallback}>
 		<Suspense fallback={<LoadingFallback />}>
 			<Layout>
 				<h1>App</h1>
