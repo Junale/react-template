@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "composite": true,
-    "lib": ["DOM", "ES2015"] // Added ES2015 to include Promise definitions
   },
-  "include": ["vite.config.ts"]
+  "include": [ "vite.config.ts" ],
 }
