@@ -1,6 +1,7 @@
-import type { Preview, ReactRenderer } from "@storybook/react";
+import type { Preview } from "@storybook/react";
+import '../src/index.css';
+import React from "react";
 import { withThemeByClassName } from '@storybook/addon-themes';
-import '../src/index.css'; // replace with the name of your tailwind css file
 
 
 
@@ -12,13 +13,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#ffffff' },
-        { name: 'dark', value: '#333333' },
-      ],
-    },
+    layout: 'fullscreen',
     options: {
       // The `a` and `b` arguments in this function have a type of `import('@storybook/types').IndexEntry`. Remember that the function is executed in a JavaScript environment, so use JSDoc for IntelliSense to introspect it.
       storySort: (a, b) => {
@@ -34,14 +29,24 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withThemeByClassName<ReactRenderer>({
-    themes: {
-      // nameOfTheme: 'classNameForTheme',
-      light: '',
-      dark: 'dark',
+  decorators: [
+    (Story, context) => {
+      const themeClass = context.globals.theme === 'dark' ? 'bg-black' : 'bg-white';
+      return (
+        <div className={`flex flex-col w-screen h-screen justify-center items-center ${themeClass}`}>
+          <Story />
+        </div>
+      );
     },
-    defaultTheme: 'light',
-  })],
+    withThemeByClassName({
+      themes: {
+        // nameOfTheme: 'classNameForTheme',
+        light: '',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+    })
+  ],
   tags: ['autodocs'],
 };
 
