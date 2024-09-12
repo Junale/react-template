@@ -9,8 +9,10 @@ const ErrorFallback = ({
 	error,
 	resetErrorBoundary,
 }: ErrorFallbackProps): JSX.Element => (
-	<div className="flex size-full justify-center items-center">
-		<ErrorWidget error={error} onClose={resetErrorBoundary} />
+	<div className="flex size-full items-center justify-center">
+		<ErrorWidget error={error}
+			onClose={resetErrorBoundary}
+		/>
 	</div>
 );
 

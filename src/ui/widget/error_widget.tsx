@@ -13,10 +13,10 @@ const ErrorWidget = ({
 }: ErrorWidgetProps): JSX.Element => (
 	<div
 		role="alert"
-		className="flex flex-col border border-black drop-shadow-lg bg-white dark:bg-[#333333] dark:border-white dark:text-white size-fit min-w-64  max-w-[25%] justify-center items-center p-6 gap-4 rounded-[32px]"
+		className="flex size-fit min-w-64 max-w-[25%] flex-col items-center justify-center gap-4 rounded-[32px] border border-black  bg-white p-6 drop-shadow-lg dark:border-white dark:bg-[#333333] dark:text-white"
 	>
 		<svg
-			className="w-8 h-8 text-red-500"
+			className="size-8 text-red-500"
 			fill="none"
 			stroke="currentColor"
 			viewBox="0 0 24 24"
@@ -30,7 +30,7 @@ const ErrorWidget = ({
 			/>
 		</svg>
 		<div className="gap-2">
-			<p className="text-center pb-2 font-bold">
+			<p className="pb-2 text-center font-bold">
 				An error occurred in the app{error?.message && ":"}
 			</p>
 			<p>{error?.message}</p>
