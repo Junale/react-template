@@ -11,6 +11,7 @@ It enforce a good practice for a React project by using several tools and librar
   - [Prerequisites](#prerequisites)
   - [Installing](#installing)
   - [Running the project](#running-the-project)
+  - [Dev tools](#dev-tools)
 - [Contributing](#contributing)
 - [Architecture](#architecture)
   - [Folder Structure](#folder-structure)
@@ -54,6 +55,15 @@ To run the project, you need to run the following command in the root of the pro
 ```bash
 bun run dev
 ```
+
+## Dev tools
+This project uses ESLint and Prettier for linting and formatting the code. You can run the following command in the root of the project to lint and format the code:
+
+```bash
+bun run lint
+```
+
+Using vscode, you can install the ESLint and Prettier extensions to lint and format the code automatically.
 
 # Contributing
 If you want to contribute to this project, you can follow the steps below:
