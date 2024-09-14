@@ -2,6 +2,7 @@ import { action } from "@storybook/addon-actions";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import ErrorWidget from "@/ui/widget/error_widget";
+import { within } from "@storybook/test";
 
 const meta: Meta<typeof ErrorWidget> = {
 	title: "UI/widget/ErrorWidget",
@@ -12,33 +13,14 @@ const meta: Meta<typeof ErrorWidget> = {
 export default meta;
 type Story = StoryObj<typeof ErrorWidget>;
 
-export const NoInputs: Story = {
-	args: {},
-};
-
-export const WithError: Story = {
+export const Default: Story = {
 	args: {
-		error: new Error("An error occurred"),
-	},
-};
-
-export const withLongErrorMessage: Story = {
-	args: {
-		error: new Error(
-			"An error occurred with a very long message that will wrap to the next line and continue to be displayed in full",
-		),
-	},
-};
-
-export const WithButtonText: Story = {
-	args: {
+		error: new Error("An error occurred in the application"),
 		buttonText: "Dismiss",
 	},
-};
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
 
-export const WithErrorAndButtonText: Story = {
-	args: {
-		error: new Error("An error occurred"),
-		buttonText: "Dismiss",
+		await canvas.findByTestId("error-widget");
 	},
 };

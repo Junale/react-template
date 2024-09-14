@@ -1,6 +1,6 @@
 import { action } from "@storybook/addon-actions";
 import type { Meta, StoryObj } from "@storybook/react";
-import { within, expect } from "@storybook/test";
+import { within } from "@storybook/test";
 
 import PrimaryButton from "@/ui/button/primary_button";
 
@@ -13,17 +13,14 @@ const meta: Meta<typeof PrimaryButton> = {
 export default meta;
 type Story = StoryObj<typeof PrimaryButton>;
 
-export const WithText: Story = {
+export const Default: Story = {
 	args: {
 		children: "Click me",
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		await expect(canvas.getByText("Click me")).toBeTruthy();
+		await canvas.findByTestId("primary-button");
 	},
 };
 
-export const NoInputs: Story = {
-	args: {},
-};

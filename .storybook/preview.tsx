@@ -1,19 +1,89 @@
+/* eslint-disable max-lines */
 import type { Preview } from "@storybook/react";
 import "../src/index.css";
-import React from "react";
-import { withThemeByClassName } from "@storybook/addon-themes";
+import React, { useEffect } from "react";
 
+// Custom hook to toggle Tailwind's "dark" class based on background selection
+const withTailwindDarkMode = (Story, context) => {
 
+  const backgrounds = context.globals.backgrounds;
+  useEffect(() => {
+    const isDark = backgrounds?.value === "#333333";
+    if (isDark)
+      document.documentElement.classList.add("dark"); // Add dark class for Tailwind
+    else
+      document.documentElement.classList.remove("dark"); // Remove dark class
+
+  }, [backgrounds]);
+
+  return <Story {...context} />;
+};
+
+// Custom viewpoints for TailwindCSS breakpoints
+const customViewports = {
+  xs: {
+    name: "Extra Small - 320px",
+    styles: {
+      width: "320px",
+      height: "100%",
+    },
+  },
+  sm: {
+    name: "Small - 640px",
+    styles: {
+      width: "640px",
+      height: "100%",
+    },
+  },
+  md: {
+    name: "Medium - 768px",
+    styles: {
+      width: "768px",
+      height: "100%",
+    },
+  },
+  lg: {
+    name: "Large - 1024px",
+    styles: {
+      width: "1024px",
+      height: "100%",
+    },
+  },
+  xl: {
+    name: "Extra Large - 1280px",
+    styles: {
+      width: "1280px",
+      height: "100%",
+    },
+  },
+  xxl: {
+    name: "Extra Extra Large - 1536px",
+    styles: {
+      width: "1536px",
+      height: "100%",
+    },
+  },
+};
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      default: "light",
+      values: [
+        { name: "light", value: "#f8f8f8" },
+        { name: "dark", value: "#333333" },
+      ],
+    },
+    viewport: {
+      viewports: customViewports,
+      defaultViewport: "lg",
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
     },
-    layout: "fullscreen",
     options: {
       // The `a` and `b` arguments in this function have a type of `import('@storybook/types').IndexEntry`. Remember that the function is executed in a JavaScript environment, so use JSDoc for IntelliSense to introspect it.
       storySort: (a, b) => {
@@ -29,24 +99,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story, context) => {
-      const themeClass = context.globals.theme === "dark" ? "bg-black" : "bg-white";
-      return (
-        <div className={"flex h-screen w-screen flex-col items-center justify-center " + themeClass}>
-          <Story />
-        </div>
-      );
-    },
-    withThemeByClassName({
-      themes: {
-        // NameOfTheme: 'classNameForTheme',
-        light: "",
-        dark: "dark",
-      },
-      defaultTheme: "light",
-    })
-  ],
+  decorators: [withTailwindDarkMode],
   tags: ["autodocs"],
 };
 

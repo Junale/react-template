@@ -12,6 +12,7 @@ const ErrorWidget = ({
 	buttonText,
 }: ErrorWidgetProps): JSX.Element => (
 	<div
+		data-testid="error-widget"
 		role="alert"
 		className="flex size-fit min-w-64 max-w-[25%] flex-col items-center justify-center gap-4 rounded-[32px] border border-black  bg-white p-6 drop-shadow-lg dark:border-white dark:bg-[#333333] dark:text-white"
 	>
